@@ -20,10 +20,10 @@ const App = () => {
 
     return (
         <div className="AppMain">
-            <div className="">
-                <span className="first">Nordic</span> <span className="second">Pixels</span>
+            <div className="AppTop">
+                <span className="first">Nordic</span><span className="second">Pixels</span>
             </div>
-            <div className="">
+            <div className="AppImages">
                 {allImages.map((ech, index) => {
                     return (
                         <div className="" key={index}>
