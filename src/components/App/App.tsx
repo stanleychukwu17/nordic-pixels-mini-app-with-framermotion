@@ -20,8 +20,18 @@ const App = () => {
 
     return (
         <div className="AppMain">
-            <div className="AppTop">
-                <span className="first">Nordic</span><span className="second">Pixels</span>
+            <div className="TopCvr">
+                <div className="AppTop">
+                    <span className="first">Nordic</span><span className="second">Pixels</span>
+                </div>
+                <div className="navBars">
+                    <div>
+                        <div>Most Rated</div>
+                    </div>
+                    <div>
+                        <div>Most viewed</div>
+                    </div>
+                </div>
             </div>
             <div className="AppImages">
                 {allImages.map((ech, index) => {
