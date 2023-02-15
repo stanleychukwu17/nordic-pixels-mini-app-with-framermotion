@@ -10,7 +10,8 @@ const images: imgType[] = []
 for (let index = 1; index < 13; index++) {
     images.push({
         num:index,
-        img: require(`../../assets/images/${index}.jpg`)
+        // img: require(`../../assets/images/${index}.jpg`)
+        img: require(`../../assets/images/1.jpg`)
     })
 }
 console.log(images)
@@ -41,6 +42,17 @@ const App = () => {
                         </div>
                     )
                 })}
+            </div>
+            <div className="orderWindow"> 
+                <div className="order_mini_window">
+                    <div className="orderClose"><p className=""></p></div>
+                    <div className="box1">
+                        <div className="orderTitle">Choose your format</div>
+                        <div className="orderImgCvr"></div>
+                        <div className="orderBtn"></div>
+                    </div>
+                    <div className="box2"></div>
+                </div>
             </div>
         </div>
     )
