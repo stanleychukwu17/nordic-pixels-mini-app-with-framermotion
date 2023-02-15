@@ -58,7 +58,24 @@ body {
             &>div {
                 width: 50%;
                 display: flex;
-                justify-content: center
+                justify-content: center;
+
+                .navClick {
+                    cursor: pointer;
+                    position: relative;
+
+                    &:active { top: 1px; }
+
+                    span {
+                        position: relative;
+                        margin: 0 3px 0 0;
+                        bottom: -3px;
+                    }
+                }
+
+                &:first-child span {
+                    bottom: -1px;
+                }
             }
         }
     }
@@ -87,7 +104,8 @@ body {
     }
 
     .orderWindow {
-        display: block;
+        // display: block;
+        display: none;
         position: fixed;
         overflow: hidden;
         top: 0;

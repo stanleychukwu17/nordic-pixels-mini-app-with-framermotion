@@ -4,6 +4,8 @@ import './app.scss';
 // import { gsap } from 'gsap';
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
+import { FaRegEye } from "react-icons/fa";
 
 type imgType = {num:number, img:string}
 const images: imgType[] = []
@@ -12,8 +14,8 @@ const images: imgType[] = []
 for (let index = 1; index < 13; index++) {
     images.push({
         num:index,
-        // img: require(`../../assets/images/${index}.jpg`)
-        img: require(`../../assets/images/1.jpg`)
+        img: require(`../../assets/images/${index}.jpg`)
+        // img: require(`../../assets/images/1.jpg`)
     })
 }
 console.log(images)
@@ -29,10 +31,10 @@ const App = () => {
                 </div>
                 <div className="navBars">
                     <div>
-                        <div>Most Rated</div>
+                        <div className='navClick'><span><FaStar /></span> Most Rated</div>
                     </div>
                     <div>
-                        <div>Most viewed</div>
+                        <div className='navClick'><span><FaRegEye /></span> Most viewed</div>
                     </div>
                 </div>
             </div>
