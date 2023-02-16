@@ -63,8 +63,10 @@ body {
                 .navClick {
                     cursor: pointer;
                     position: relative;
+                    opacity: .5;
 
                     &:active { top: 1px; }
+                    &.active { opacity: 1; }
 
                     span {
                         position: relative;
@@ -83,18 +85,20 @@ body {
 
     .AppImages {
         // filter: blur(2px);
-        display: flex;
-        flex-flow: row wrap;
-        justify-content: space-evenly;
+        // display: flex;
+        // flex-flow: row wrap;
+        // justify-content: space-evenly;
 
         & > div {
             @include u1.block_display();
             width: 32.3%;
             margin: 2px 0;
-            max-height: 175px;
+            height: 175px;
             border-radius: 5px;
             border: 2px solid $lightColor;
             cursor: pointer;
+
+            float: left;
 
             img {
                 width: 100%;
