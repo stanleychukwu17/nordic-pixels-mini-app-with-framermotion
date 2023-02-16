@@ -3,10 +3,16 @@ import './app.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
 
+// motion variant
+import { cardVariant } from './Variants';
+
+// importing react-icons to use for this project
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
+
+
 
 const _ = require('lodash');
 
@@ -36,16 +42,17 @@ for (let index = 1; index < 13; index++) {
 
 
 type imgProps = {
-    obj: singleImgType,
+    obj: imgType,
     index: number
 }
 const ImgComp = ({obj, index}: imgProps) => {
     return (
-        <motion.div layout className="ImgBoth" key={`${obj.key}-${obj.title}`} variants={cardVariant} initial="initial" animate="animate" custom={index}>
-            <motion.div className='ImgCvr' >
-                <motion.img src={obj.img} alt="" variants={imgMainVar} />
-            </motion.div>
-            <motion.div className="ImgTitle" variants={imgTitleVar}>{obj.title} - {obj.genre.join(' ')}</motion.div>
+        <motion.div
+            layout key={index} custom={index}
+            data-id={obj.id} data-rating={obj.rating} data-views={obj.views}
+            variants={cardVariant} initial="initial" animate="animate"
+        >
+            <img src={obj.img} alt="" />
         </motion.div>
     )
 }
@@ -84,14 +91,7 @@ const App = () => {
             </div>
             <div className="AppImages">
                     {allImages.map((ech, index) => {
-                        return (
-                            <motion.div
-                                layout
-                                className="" key={index} data-id={ech.id} data-rating={ech.rating} data-views={ech.views}
-                            >
-                                <img src={ech.img} alt="" />
-                            </motion.div>
-                        )
+                        return <ImgComp obj={ech} index={index} />
                     })}
             </div>
             <div className="orderWindow"> 
