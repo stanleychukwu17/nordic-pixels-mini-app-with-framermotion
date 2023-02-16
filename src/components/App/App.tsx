@@ -1,21 +1,28 @@
 import { useState } from 'react';
 import './app.scss';
 // import { motion } from 'framer-motion';
-// import { gsap } from 'gsap';
+import { gsap } from 'gsap';
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
 
-type imgType = {num:number, img:string}
+type imgType = {
+    id:number,
+    img:string,
+    rating:number,
+    watched:number,
+}
 const images: imgType[] = []
 
 
 for (let index = 1; index < 13; index++) {
     images.push({
-        num:index,
-        img: require(`../../assets/images/${index}.jpg`)
-        // img: require(`../../assets/images/1.jpg`)
+        id: index,
+        img: require(`../../assets/images/${index}.jpg`),
+        // img: require(`../../assets/images/1.jpg`),
+        rating: Math.round(gsap.utils.random(1, 20)),
+        watched: Math.round(gsap.utils.random(10, 5000)),
     })
 }
 console.log(images)
@@ -41,7 +48,7 @@ const App = () => {
             <div className="AppImages">
                 {allImages.map((ech, index) => {
                     return (
-                        <div className="" key={index}>
+                        <div className="" key={index} data-id={ech.id} data-rating={ech.rating} data-watched={ech.watched}>
                             <img src={ech.img} alt="" />
                         </div>
                     )
