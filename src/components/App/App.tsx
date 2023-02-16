@@ -7,10 +7,9 @@ import { gsap } from 'gsap';
 import {EchImageVariant} from './Variants'
 
 // icons to use from react-icons
-import { FaChevronLeft } from "react-icons/fa";
-import { FaChevronRight } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
+import MiniWindow from '../modal/MiniWindow';
 
 const _ = require('lodash');
 
@@ -34,6 +33,7 @@ for (let index = 1; index < 13; index++) {
 const App = () => {
     const [allImages, setAllImages] = useState<imgType[]>(images)
     const [tabActive, setTabActive] = useState<'none'|'views'|'rating'>('none')
+    const [showModal, setShowModal] = useState<boolean>(false)
     const imageControls = useAnimationControls()
 
     useEffect(() => {
@@ -49,6 +49,10 @@ const App = () => {
 
         setAllImages(newSort)
         setTabActive(wchTab)
+    }
+
+    const show_this_image_options_for_purchase = () => {
+        setShowModal(true); // shows the mini-window for buying of images
     }
 
     return (
@@ -81,38 +85,14 @@ const App = () => {
                                 animate={imageControls}
                                 custom={index}
                                 className="" key={index} data-id={ech.id} data-rating={ech.rating} data-views={ech.views}
+                                onClick={() => { show_this_image_options_for_purchase() }}
                             >
                                 <img src={ech.img} alt="" />
                             </motion.div>
                         )
                     })}
             </div>
-            <div className="orderWindow"> 
-                <div className="order_mini_window">
-                    <div className="orderClose"><p className=""></p></div>
-                    <div className="box1">
-                        <div className="orderTitle">Choose your format</div>
-                        <div className="orderImgCvr">
-                            <div className="navBtn">
-                                <div className=""><FaChevronLeft /></div>
-                            </div>
-                            <div className="imgSlideCvr">
-                                <div className="imgInnerCvr"></div>
-                            </div>
-                            <div className="navBtn">
-                                <div className=""><FaChevronRight /></div>
-                            </div>
-                        </div>
-                        <div className="imgFormatB1">
-                            <div className="imgFormatCvr"></div>
-                        </div>
-                        <div className="orderBtn">
-                            <button className="">Continue</button>
-                        </div>
-                    </div>
-                    <div className="box2"></div>
-                </div>
-            </div>
+            { showModal && <MiniWindow /> }
         </div>
     )
 }
