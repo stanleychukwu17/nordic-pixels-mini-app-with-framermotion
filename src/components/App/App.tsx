@@ -1,8 +1,12 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import './app.scss';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, useAnimationControls } from 'framer-motion';
 import { gsap } from 'gsap';
 
+// variants for framer motion animations
+import {EchImageVariant} from './Variants'
+
+// icons to use from react-icons
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
@@ -17,13 +21,12 @@ type imgType = {
     views:number,
 }
 const images: imgType[] = []
-
-
+// load the images to be displayed into our array database
 for (let index = 1; index < 13; index++) {
     images.push({
         id: index,
         img: require(`../../assets/images/${index}.jpg`),
-        rating: Math.round(gsap.utils.random(1, 20)),
+        rating: Math.round(gsap.utils.random(10, 200)),
         views: Math.round(gsap.utils.random(10, 5000)),
     })
 }
@@ -31,14 +34,22 @@ for (let index = 1; index < 13; index++) {
 const App = () => {
     const [allImages, setAllImages] = useState<imgType[]>(images)
     const [tabActive, setTabActive] = useState<'none'|'views'|'rating'>('none')
+    const imageControls = useAnimationControls()
+
+    useEffect(() => {
+        imageControls.start('intro')
+    }, [])
 
     // sort the images in accordance to the selected tab
-    const show_the_images_for_this_tab = useCallback((wchTab:'views'|'rating') => {
+    const show_the_images_for_this_tab = async (wchTab:'views'|'rating') => {
         const newSort = _.sortBy(allImages, [wchTab]).reverse()
+
+        await imageControls.start('takeItAway')
+        imageControls.start('BringItBack')
 
         setAllImages(newSort)
         setTabActive(wchTab)
-    }, [])
+    }
 
     return (
         <div className="AppMain">
@@ -65,8 +76,10 @@ const App = () => {
                     {allImages.map((ech, index) => {
                         return (
                             <motion.div
-                                initial={{x:-100}}
-                                animate={{x:0}}
+                                variants={EchImageVariant}
+                                initial='initial'
+                                animate={imageControls}
+                                custom={index}
                                 className="" key={index} data-id={ech.id} data-rating={ech.rating} data-views={ech.views}
                             >
                                 <img src={ech.img} alt="" />

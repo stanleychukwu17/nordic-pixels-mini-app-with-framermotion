@@ -54,6 +54,7 @@ body {
         .navBars {
             display: flex;
             padding: 0 0 25px;
+            font-size: 1.1rem;
 
             &>div {
                 width: 50%;
@@ -64,9 +65,12 @@ body {
                     cursor: pointer;
                     position: relative;
                     opacity: .5;
+                    -webkit-user-select: none; /* Safari */
+                    -ms-user-select: none; /* IE 10 and IE 11 */
+                    user-select: none; /* Standard syntax */
 
                     &:active { top: 1px; }
-                    &.active { opacity: 1; }
+                    &.active { opacity: 1; font-weight: bold; }
 
                     span {
                         position: relative;
@@ -97,6 +101,7 @@ body {
             border-radius: 5px;
             border: 2px solid $lightColor;
             cursor: pointer;
+            transform-origin: bottom left;
 
             img {
                 width: 100%;
