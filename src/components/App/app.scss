@@ -85,9 +85,9 @@ body {
 
     .AppImages {
         // filter: blur(2px);
-        // display: flex;
-        // flex-flow: row wrap;
-        // justify-content: space-evenly;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: space-evenly;
 
         & > div {
             @include u1.block_display();
@@ -97,8 +97,6 @@ body {
             border-radius: 5px;
             border: 2px solid $lightColor;
             cursor: pointer;
-
-            float: left;
 
             img {
                 width: 100%;

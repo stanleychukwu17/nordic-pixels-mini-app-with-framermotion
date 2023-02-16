@@ -3,16 +3,10 @@ import './app.scss';
 import { motion, AnimatePresence } from 'framer-motion';
 import { gsap } from 'gsap';
 
-// motion variant
-import { cardVariant } from './Variants';
-
-// importing react-icons to use for this project
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 import { FaStar } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
-
-
 
 const _ = require('lodash');
 
@@ -34,29 +28,6 @@ for (let index = 1; index < 13; index++) {
     })
 }
 
-
-
-
-
-
-
-
-type imgProps = {
-    obj: imgType,
-    index: number
-}
-const ImgComp = ({obj, index}: imgProps) => {
-    return (
-        <motion.div
-            layout key={index} custom={index}
-            data-id={obj.id} data-rating={obj.rating} data-views={obj.views}
-            variants={cardVariant} initial="initial" animate="animate"
-        >
-            <img src={obj.img} alt="" />
-        </motion.div>
-    )
-}
-
 const App = () => {
     const [allImages, setAllImages] = useState<imgType[]>(images)
     const [tabActive, setTabActive] = useState<'none'|'views'|'rating'>('none')
@@ -64,6 +35,7 @@ const App = () => {
     // sort the images in accordance to the selected tab
     const show_the_images_for_this_tab = useCallback((wchTab:'views'|'rating') => {
         const newSort = _.sortBy(allImages, [wchTab]).reverse()
+
         setAllImages(newSort)
         setTabActive(wchTab)
     }, [])
@@ -91,7 +63,15 @@ const App = () => {
             </div>
             <div className="AppImages">
                     {allImages.map((ech, index) => {
-                        return <ImgComp obj={ech} index={index} />
+                        return (
+                            <motion.div
+                                initial={{x:-100}}
+                                animate={{x:0}}
+                                className="" key={index} data-id={ech.id} data-rating={ech.rating} data-views={ech.views}
+                            >
+                                <img src={ech.img} alt="" />
+                            </motion.div>
+                        )
                     })}
             </div>
             <div className="orderWindow"> 
