@@ -66,7 +66,7 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
             console.log(error)
         }
 
-
+        // animates the modal into view
         closeAnimationControls.set({opacity:0, y: 300})
         closeAnimationControls.start({opacity:1, y:0, transition:{ease:'easeOut'}})
 
@@ -74,6 +74,12 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
         if(detectMob()) {
             const button = document.querySelector('.orderClose p')
             button?.classList.add('mobileSize')
+        }
+
+        // stops the body element from overScrolling
+        document.querySelector('body')?.classList.add('noScroll')
+        return () => {
+            document.querySelector('body')?.classList.remove('noScroll')
         }
     }, [closeAnimationControls])
 
