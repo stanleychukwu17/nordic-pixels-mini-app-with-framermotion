@@ -13,7 +13,7 @@ type miniProps = {
 export default function MiniWindow({imgUrl}:miniProps) {
 
     return (
-        <div className="orderWindow"> 
+        <div className="orderWindow">
             <div className="order_mini_window">
                 <div className="orderClose"><p className=""></p></div>
                 <div className="box1">
@@ -24,7 +24,9 @@ export default function MiniWindow({imgUrl}:miniProps) {
                         </div>
                         <div className="imgSlideCvr">
                             <div className="imgInnerCvr">
-                                <div className=""><img src={imgUrl} alt="" /></div>
+                                <div className="img1"><img src={imgUrl} alt="" /></div>
+                                <div className="img1"><img src={imgUrl} alt="" /></div>
+                                <div className="img1"><img src={imgUrl} alt="" /></div>
                             </div>
                         </div>
                         <div className="navBtn">

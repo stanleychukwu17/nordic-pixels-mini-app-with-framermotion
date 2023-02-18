@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import {useEffect, useState } from 'react';
 import './app.scss';
 import { motion, useAnimationControls } from 'framer-motion';
 import { gsap } from 'gsap';
@@ -33,13 +33,12 @@ for (let index = 1; index < 13; index++) {
 const App = () => {
     const [allImages, setAllImages] = useState<imgType[]>(images)
     const [tabActive, setTabActive] = useState<'none'|'views'|'rating'>('none')
-    const [showModal, setShowModal] = useState<{show:boolean, imgUrl:string}>({show:false, imgUrl:''})
+    const [showModal, setShowModal] = useState<{show:boolean, imgUrl:string}>({show:true, imgUrl:allImages[3].img})
     const imageControls = useAnimationControls()
 
-    console.log(allImages)
     useEffect(() => {
         imageControls.start('intro')
-    }, [])
+    }, [imageControls])
 
     // sort the images in accordance to the selected tab
     const show_the_images_for_this_tab = async (wchTab:'views'|'rating') => {
