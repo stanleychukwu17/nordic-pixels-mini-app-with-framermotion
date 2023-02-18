@@ -39,6 +39,9 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
         const cssObj = window.getComputedStyle(imgElement, null);
         const imgW = Number(cssObj.getPropertyValue("width").replace(/[^0-9]/g, ""));
         imageWidth.current = imgW
+
+        closeAnimationControls.set({opacity:0, y: 300})
+        closeAnimationControls.start({opacity:1, y:0, transition:{ease:'easeOut'}})
     }, [])
 
     //--start-- for modal mini-window closing
@@ -51,7 +54,7 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
         if (currentCloseY < 150) {
             closeAnimationControls.start({y:0})
         } else {
-            await closeAnimationControls.start({y:1000})
+            await closeAnimationControls.start({y:500, opacity:0, transition:{ease:'linear', duration:.2}})
 
             // update the state so that the parent component knows that the modal is no-longer showing anymore, also delays the update until the animation above is completed
             setShowModal({show:false, imgUrl:imgUrl})
