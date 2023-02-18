@@ -84,11 +84,10 @@
                         // background-color: darken($color: $bgColor2, $amount: 8);
 
                         .img1 {
+                            @include u1.block_display();
+                            float: left;
                             width: 370px;
                             height: 370px;
-                            display: block;
-                            position: relative;
-                            float: left;
 
                             img {
                                 width: 100%;
