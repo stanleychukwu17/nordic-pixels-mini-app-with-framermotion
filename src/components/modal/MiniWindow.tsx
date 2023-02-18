@@ -5,9 +5,31 @@ import { motion, useAnimationControls, useDragControls, useMotionValue } from 'f
 import './MiniStyle.scss'
 
 // icons to use from react-icons
-import { FaChevronLeft } from "react-icons/fa";
-import { FaChevronRight } from "react-icons/fa";
-import { FaAngleDoubleRight } from "react-icons/fa";
+import { FaChevronLeft, FaChevronRight, FaAngleDoubleRight } from "react-icons/fa";
+
+// variants for framerMotion animations
+import { box2_Dts1_Variant, box2_Dts2_Variant, buttonVariant } from '../App/Variants';
+
+
+
+// checks to see if a user is on a mobile device
+function detectMob() {
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+    
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
+}
+
+
 
 
 export type modalProps1 = {
@@ -22,7 +44,7 @@ type miniProps = modalProps1 & {
 }
 // https://learn.headliner.app/hc/en-us/articles/360004101114-What-are-the-sizes-of-the-landscape-portrait-square-templates- - got references for different sizes from here
 export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
-    const [showBox2, setShowBox2] = useState<boolean>(false)
+    const [showBox2, setShowBox2] = useState<boolean>(true)
     const sliderControl = useAnimationControls()
     const currentImage = useRef<number>(0)
     const imageWidth = useRef<number>(1)
@@ -35,14 +57,25 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
 
     // update the slider image width
     useEffect(() => {
-        const imgElement = document.querySelector('.img1') as Element
-        const cssObj = window.getComputedStyle(imgElement, null);
-        const imgW = Number(cssObj.getPropertyValue("width").replace(/[^0-9]/g, ""));
-        imageWidth.current = imgW
+        try {
+            const imgElement = document.querySelector('.img1') as Element
+            const cssObj = window.getComputedStyle(imgElement, null);
+            const imgW = Number(cssObj.getPropertyValue("width").replace(/[^0-9]/g, ""));
+            imageWidth.current = imgW
+        } catch (error) {
+            console.log(error)
+        }
+
 
         closeAnimationControls.set({opacity:0, y: 300})
         closeAnimationControls.start({opacity:1, y:0, transition:{ease:'easeOut'}})
-    }, [])
+
+        // i want the closing button to be bigger on mobile devices
+        if(detectMob()) {
+            const button = document.querySelector('.orderClose p')
+            button?.classList.add('mobileSize')
+        }
+    }, [closeAnimationControls])
 
     //--start-- for modal mini-window closing
     function startDrag(e: PointerEvent<HTMLParagraphElement>) {
@@ -104,7 +137,7 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                 <div className="orderClose">
                     <motion.p
                         onPointerDown={startDrag}
-                        style={{ touchAction: "none" }}
+                        style={{touchAction: "none"}}
                     ></motion.p>
                 </div>
 
@@ -143,17 +176,16 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                 {showBox2 && (
                     <div className="box2">
                         <div className="orderTitle">Review your order</div>
-                        <div className="bx2Mid">
-                            <div className=""><p>SKU:</p><p>Printed photo</p></div>
-                            <div className=""><p>Delivery:</p><p>Expedited</p></div>
-                            <div className=""><p>Price:</p><p>$59.99</p></div>
-                        </div>
+                        <motion.div variants={box2_Dts1_Variant} initial='initial' animate='animate' className="bx2Mid">
+                            <motion.div variants={box2_Dts2_Variant}><p>SKU:</p><p>Printed photo</p></motion.div>
+                            <motion.div variants={box2_Dts2_Variant}><p>Delivery:</p><p>Expedited</p></motion.div>
+                            <motion.div variants={box2_Dts2_Variant}><p>Price:</p><p>$59.99</p></motion.div>
+                        </motion.div>
 
                         <div className="bx2Btn">
-                            <button>
-                                <p><FaAngleDoubleRight /></p>
-                                Confirm your order
-                            </button>
+                            <motion.button variants={buttonVariant} initial='initial' animate='animate'>
+                                <p><FaAngleDoubleRight /></p> Confirm your order
+                            </motion.button>
                         </div>
                     </div>
                 )}

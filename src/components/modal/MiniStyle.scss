@@ -31,11 +31,16 @@ body {
         .orderClose {
             p {
                 width: 150px;
-                height: 18px;
+                height: 8px;
                 margin: 15px auto;
                 border-radius: 20px;
                 background-color: #a7adc8;
                 cursor: grab;
+
+                &.mobileSize {
+                    width: 160px;
+                    height: 17px;
+                }
             }
         }
         .orderTitle {
@@ -49,7 +54,6 @@ body {
         }
 
         .box1 {
-
             .orderImgCvr {
                 display: flex;
                 justify-content: space-between;
@@ -195,6 +199,7 @@ body {
             }
             .bx2Btn{
                 text-align: center;
+                padding: 15px 0;
 
                 button {
                     position: relative;
@@ -207,14 +212,13 @@ body {
                     border-radius: 80px;
                     font-size: 1.3rem;
                     font-weight: bold;
-                    cursor: pointer;
 
                     p {
                         position: absolute;
-                        width: 60px;
-                        height: 60px;
+                        width: 58px;
+                        height: 58px;
                         border-radius: 100px;
-                        top: 0;
+                        top: 2px;
                         left: 1%;
                         bottom: auto;
                         right: auto;
@@ -224,10 +228,6 @@ body {
                         display: flex;
                         justify-content: center;
                         align-items: center;
-                    }
-
-                    &:active {
-                        top: 1px;
                     }
                 }
             }

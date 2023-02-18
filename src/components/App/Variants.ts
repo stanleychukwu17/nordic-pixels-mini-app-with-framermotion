@@ -45,3 +45,33 @@ export const EchImageVariant: imgType = {
         }
     }),
 };
+
+
+
+// this variants are for MiniWindow.tsx components
+export const box2_Dts1_Variant: generalOne = {
+    initial: {},
+    animate: {
+        transition:{
+            staggerChildren: .1
+        }
+    }
+}
+
+export const box2_Dts2_Variant: generalOne = {
+    initial: {x: 50, opacity: 0},
+    animate: { x: 0, opacity: 1}
+}
+
+export const buttonVariant: generalOne = {
+    initial: {scale: .8},
+    animate: {
+        scale: 1,
+        transition: {
+            duration: .1,
+            type: 'spring',
+            stiffness: 700,
+            damping: 8,
+        }
+    }
+}
