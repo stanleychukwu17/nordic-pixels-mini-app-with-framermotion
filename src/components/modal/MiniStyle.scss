@@ -1,5 +1,10 @@
 @use '../../styles/util/' as u1;
 
+body {
+    display: block;
+    position: relative;
+    overflow: hidden;
+}
 .orderWindow {
     $lightColor: #e8f0d5;
     $yellowColor: #fcd30c;
@@ -16,8 +21,8 @@
     .order_mini_window {
         @include u1.block_display();
         width: 100%;
-        height: 77%;
-        top:23%;
+        height: 80%;
+        top:20%;
         background-color: $bgColor2;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
@@ -27,7 +32,7 @@
         .orderClose {
             p {
                 width: 150px;
-                height: 8px;
+                height: 18px;
                 margin: 15px auto;
                 border-radius: 20px;
                 background-color: #a7adc8;
@@ -41,6 +46,7 @@
             font-weight: 700;
             text-transform: uppercase;
             word-spacing: 5px;
+            user-select: none;
         }
 
         .box1 {

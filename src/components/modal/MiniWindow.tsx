@@ -1,5 +1,5 @@
-import {useState, useRef, useEffect} from 'react';
-import { motion, useAnimationControls } from 'framer-motion';
+import {useState, useRef, useEffect, PointerEvent } from 'react';
+import { motion, useAnimationControls, useDragControls, useMotionValue, useTransform } from 'framer-motion';
 
 import './MiniStyle.scss'
 
@@ -21,17 +21,35 @@ export default function MiniWindow({imgUrl}:miniProps) {
     const currentImage = useRef<number>(0)
     const imageWidth = useRef<number>(1)
 
-    // update the image width
+    const closeY = useMotionValue(0)
+    const windowY = useTransform(closeY, [0, 100], [0, 100])
+    const closeDragControl = useDragControls()
+
+    // update the slider image width
     useEffect(() => {
         const imgElement = document.querySelector('.img1') as Element
         const cssObj = window.getComputedStyle(imgElement, null);
         const imgW = Number(cssObj.getPropertyValue("width").replace(/[^0-9]/g, ""));
         imageWidth.current = imgW
     }, [])
+
+    useEffect(() => {
+        const unSub = closeY.onChange(latest => {
+            console.log(latest, windowY.get())
+        })
+
+        return () => {
+            unSub()
+        }
+    }, [closeY])
     
+    function startDrag(e: PointerEvent<HTMLParagraphElement>) {
+        closeDragControl.start(e)
+    }
 
     // the function for sliding of the images
     const showTheNextImage = async (whichSide: 'left'|'right') => {
+        // moving to the left or to the right
         if (whichSide === 'left'){
             currentImage.current--;
 
@@ -46,26 +64,32 @@ export default function MiniWindow({imgUrl}:miniProps) {
             }
         }
 
-
+        // slides the current image to view
         const move1 = currentImage.current * imageWidth.current
-        console.log(move1)
-
-
         sliderControl.start({
             x: -move1,
-            transition: {
-                duration: .5,
-                type: 'spring',
-                stiffness: 500,
-                damping: 20,
-            }
+            transition: {duration: .5, type: 'spring', stiffness: 500, damping: 20}
         })
     }
 
     return (
-        <div className="orderWindow">
+        <motion.div
+            drag="y"
+            dragControls={closeDragControl}
+            dragListener={false}
+            dragMomentum={false}
+            dragConstraints={{top:0}}
+            dragElastic={0}
+            className="orderWindow"
+        >
             <div className="order_mini_window">
-                <div className="orderClose"><p className=""></p></div>
+                <div className="orderClose">
+                    <motion.p
+                        onPointerDown={startDrag}
+                        style={{ touchAction: "none" }}
+                    ></motion.p>
+                </div>
+
                 {!showBox2 && (
                     <div className="box1">
                         <div className="orderTitle">Choose your format</div>
@@ -116,6 +140,6 @@ export default function MiniWindow({imgUrl}:miniProps) {
                     </div>
                 )}
             </div>
-        </div>
+        </motion.div>
     )
 }
