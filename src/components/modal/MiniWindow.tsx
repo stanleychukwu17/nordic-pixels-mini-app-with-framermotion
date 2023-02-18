@@ -75,9 +75,15 @@ export default function MiniWindow({imgUrl}:miniProps) {
                             </div>
                             <div className="imgSlideCvr">
                                 <motion.div className="imgInnerCvr" animate={sliderControl}>
-                                    <div className="img1"><img src={imgUrl} alt="" /></div>
-                                    <div className="img1"><img src={imgUrl} alt="" /></div>
-                                    <div className="img1"><img src={imgUrl} alt="" /></div>
+                                    <div className="img1">
+                                        <div><img src={imgUrl} alt="" /></div>
+                                    </div>
+                                    <div className="img1 i2">
+                                        <div><img src={imgUrl} alt="" /></div>
+                                    </div>
+                                    <div className="img1 i3">
+                                        <div><img src={imgUrl} alt="" /></div>
+                                    </div>
                                 </motion.div>
                             </div>
                             <div className="navBtn">

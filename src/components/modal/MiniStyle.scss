@@ -90,6 +90,24 @@
                             float: left;
                             width: 370px;
                             height: 370px;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+
+                            &.i2 { // potrait
+                                > div {
+                                    position: relative;
+                                    width: 208px;
+                                    height: 100%;
+                                }
+                            }
+                            &.i3 { // landscape
+                                > div {
+                                    position: relative;
+                                    width: 100%;
+                                    height: 208px;
+                                }
+                            }
 
                             img {
                                 width: 100%;
