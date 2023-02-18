@@ -21,6 +21,8 @@
         background-color: $bgColor2;
         border-top-left-radius: 20px;
         border-top-right-radius: 20px;
+        color: #1f1b3d;
+
 
         .orderClose {
             p {
@@ -28,21 +30,21 @@
                 height: 8px;
                 margin: 15px auto;
                 border-radius: 20px;
-                background-color: dimgrey;
+                background-color: #a7adc8;
                 cursor: grab;
             }
         }
-        .box1 {
-            color: #1f1b3d;
+        .orderTitle {
+            padding: 5px 0;
+            text-align: center;
+            font-size: larger;
+            font-weight: 700;
+            text-transform: uppercase;
+            word-spacing: 5px;
+        }
 
-            .orderTitle {
-                padding: 5px 0;
-                text-align: center;
-                font-size: larger;
-                font-weight: 700;
-                text-transform: uppercase;
-                word-spacing: 5px;
-            }
+        .box1 {
+
             .orderImgCvr {
                 display: flex;
                 justify-content: space-between;
@@ -110,7 +112,7 @@
                     min-width: 40%;
                     height: 40px;
                     border-radius: 5px;
-                    background-color: $bgColor2;
+                    background-color: #efeff0;
                     box-shadow: 0 0.4em 1em rgba(0, 0, 0, 0.1);
                 }
             }
@@ -146,6 +148,63 @@
                         top: 8.5%;
                         border: 2px solid $lightColor;
                         border-radius: 80px;
+                    }
+                }
+            }
+        }
+
+        .box2 {
+            .bx2Mid{
+                width: 60%;
+                padding: 20px 0;
+                margin-inline: auto;
+
+                > div {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 10px 0;
+                    font-size: 1.2rem;
+
+                    > p:nth-child(2) {
+                        font-weight: 700;
+                    }
+                }
+            }
+            .bx2Btn{
+                text-align: center;
+
+                button {
+                    position: relative;
+                    padding: .9em 4.5em;
+                    border: none;
+                    transition: all 0.1s linear;
+                    box-shadow: 0 0.4em 1em rgba(0, 0, 0, 0.1);
+                    background: #000;
+                    color: $lightColor;
+                    border-radius: 80px;
+                    font-size: 1.3rem;
+                    font-weight: bold;
+                    cursor: pointer;
+
+                    p {
+                        position: absolute;
+                        width: 60px;
+                        height: 60px;
+                        border-radius: 100px;
+                        top: 0;
+                        left: 1%;
+                        bottom: auto;
+                        right: auto;
+                        background-color: $lightColor;
+                        color: #000;
+                        cursor: grab;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                    }
+
+                    &:active {
+                        top: 1px;
                     }
                 }
             }
