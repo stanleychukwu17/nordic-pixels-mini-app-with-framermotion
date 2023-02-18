@@ -1,4 +1,6 @@
-import {useState } from 'react';
+import {useState, useRef, useEffect} from 'react';
+import { motion, useAnimationControls } from 'framer-motion';
+
 import './MiniStyle.scss'
 
 // icons to use from react-icons
@@ -15,6 +17,50 @@ type miniProps = {
 // https://learn.headliner.app/hc/en-us/articles/360004101114-What-are-the-sizes-of-the-landscape-portrait-square-templates- - got references for different sizes from here
 export default function MiniWindow({imgUrl}:miniProps) {
     const [showBox2, setShowBox2] = useState<boolean>(false)
+    const sliderControl = useAnimationControls()
+    const currentImage = useRef<number>(0)
+    const imageWidth = useRef<number>(1)
+
+    // update the image width
+    useEffect(() => {
+        const imgElement = document.querySelector('.img1') as Element
+        const cssObj = window.getComputedStyle(imgElement, null);
+        const imgW = Number(cssObj.getPropertyValue("width").replace(/[^0-9]/g, ""));
+        imageWidth.current = imgW
+    }, [])
+    
+
+    // the function for sliding of the images
+    const showTheNextImage = async (whichSide: 'left'|'right') => {
+        if (whichSide === 'left'){
+            currentImage.current--;
+
+            if (currentImage.current <= 0) {
+                currentImage.current = 0
+            }
+        } else if (whichSide === 'right') {
+            currentImage.current++;
+
+            if (currentImage.current >= 2) {
+                currentImage.current = 2
+            }
+        }
+
+
+        const move1 = currentImage.current * imageWidth.current
+        console.log(move1)
+
+
+        sliderControl.start({
+            x: -move1,
+            transition: {
+                duration: .5,
+                type: 'spring',
+                stiffness: 500,
+                damping: 20,
+            }
+        })
+    }
 
     return (
         <div className="orderWindow">
@@ -25,17 +71,17 @@ export default function MiniWindow({imgUrl}:miniProps) {
                         <div className="orderTitle">Choose your format</div>
                         <div className="orderImgCvr">
                             <div className="navBtn">
-                                <div className=""><FaChevronLeft /></div>
+                                <div onClick={() => showTheNextImage('left')}><FaChevronLeft /></div>
                             </div>
                             <div className="imgSlideCvr">
-                                <div className="imgInnerCvr">
+                                <motion.div className="imgInnerCvr" animate={sliderControl}>
                                     <div className="img1"><img src={imgUrl} alt="" /></div>
                                     <div className="img1"><img src={imgUrl} alt="" /></div>
                                     <div className="img1"><img src={imgUrl} alt="" /></div>
-                                </div>
+                                </motion.div>
                             </div>
                             <div className="navBtn">
-                                <div className=""><FaChevronRight /></div>
+                                <div onClick={() => showTheNextImage('right')}><FaChevronRight /></div>
                             </div>
                         </div>
                         <div className="imgFormatB1">
