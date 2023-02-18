@@ -1,8 +1,17 @@
+import './MiniStyle.scss'
+
 // icons to use from react-icons
 import { FaChevronLeft } from "react-icons/fa";
 import { FaChevronRight } from "react-icons/fa";
 
-export default function MiniWindow() {
+
+type miniProps = {
+    show: boolean;
+    imgUrl: string
+}
+// https://learn.headliner.app/hc/en-us/articles/360004101114-What-are-the-sizes-of-the-landscape-portrait-square-templates- - got references for different sizes from here
+export default function MiniWindow({imgUrl}:miniProps) {
+
     return (
         <div className="orderWindow"> 
             <div className="order_mini_window">
@@ -14,7 +23,9 @@ export default function MiniWindow() {
                             <div className=""><FaChevronLeft /></div>
                         </div>
                         <div className="imgSlideCvr">
-                            <div className="imgInnerCvr"></div>
+                            <div className="imgInnerCvr">
+                                <div className=""><img src={imgUrl} alt="" /></div>
+                            </div>
                         </div>
                         <div className="navBtn">
                             <div className=""><FaChevronRight /></div>

@@ -33,9 +33,10 @@ for (let index = 1; index < 13; index++) {
 const App = () => {
     const [allImages, setAllImages] = useState<imgType[]>(images)
     const [tabActive, setTabActive] = useState<'none'|'views'|'rating'>('none')
-    const [showModal, setShowModal] = useState<boolean>(false)
+    const [showModal, setShowModal] = useState<{show:boolean, imgUrl:string}>({show:false, imgUrl:''})
     const imageControls = useAnimationControls()
 
+    console.log(allImages)
     useEffect(() => {
         imageControls.start('intro')
     }, [])
@@ -51,8 +52,8 @@ const App = () => {
         setTabActive(wchTab)
     }
 
-    const show_this_image_options_for_purchase = () => {
-        setShowModal(true); // shows the mini-window for buying of images
+    const show_this_image_options_for_purchase = (imgUrl:string) => {
+        setShowModal({show:true, imgUrl}); // shows the mini-window for buying of images
     }
 
     return (
@@ -85,14 +86,14 @@ const App = () => {
                                 animate={imageControls}
                                 custom={index}
                                 className="" key={index} data-id={ech.id} data-rating={ech.rating} data-views={ech.views}
-                                onClick={() => { show_this_image_options_for_purchase() }}
+                                onClick={() => { show_this_image_options_for_purchase(ech.img) }}
                             >
                                 <img src={ech.img} alt="" />
                             </motion.div>
                         )
                     })}
             </div>
-            { showModal && <MiniWindow /> }
+            { showModal.show && <MiniWindow {...showModal} /> }
         </div>
     )
 }
