@@ -9,9 +9,19 @@ import {EchImageVariant} from './Variants'
 // icons to use from react-icons
 import { FaStar } from "react-icons/fa";
 import { FaRegEye } from "react-icons/fa";
+
+// components
+import { modalProps1 } from '../modal/MiniWindow';
 import MiniWindow from '../modal/MiniWindow';
 
+// importing utility lodash
 const _ = require('lodash');
+
+
+
+
+
+
 
 type imgType = {
     id:number,
@@ -33,7 +43,7 @@ for (let index = 1; index < 13; index++) {
 const App = () => {
     const [allImages, setAllImages] = useState<imgType[]>(images)
     const [tabActive, setTabActive] = useState<'none'|'views'|'rating'>('none')
-    const [showModal, setShowModal] = useState<{show:boolean, imgUrl:string}>({show:true, imgUrl:allImages[3].img})
+    const [showModal, setShowModal] = useState<modalProps1>({show:true, imgUrl:allImages[3].img})
     const imageControls = useAnimationControls()
 
     useEffect(() => {
@@ -92,7 +102,7 @@ const App = () => {
                         )
                     })}
             </div>
-            { showModal.show && <MiniWindow {...showModal} /> }
+            { showModal.show && <MiniWindow setShowModal={setShowModal} {...showModal} /> }
         </div>
     )
 }

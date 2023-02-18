@@ -1,5 +1,6 @@
 import {useState, useRef, useEffect, PointerEvent } from 'react';
-import { motion, useAnimationControls, useDragControls, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useAnimationControls, useDragControls, useMotionValue } from 'framer-motion';
+// useTransform
 
 import './MiniStyle.scss'
 
@@ -9,21 +10,28 @@ import { FaChevronRight } from "react-icons/fa";
 import { FaAngleDoubleRight } from "react-icons/fa";
 
 
-
-type miniProps = {
+export type modalProps1 = {
     show: boolean;
     imgUrl: string
 }
+type miniProps = modalProps1 & {
+    setShowModal: React.Dispatch<React.SetStateAction<{
+        show: boolean;
+        imgUrl: string;
+    }>>;
+}
 // https://learn.headliner.app/hc/en-us/articles/360004101114-What-are-the-sizes-of-the-landscape-portrait-square-templates- - got references for different sizes from here
-export default function MiniWindow({imgUrl}:miniProps) {
+export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
     const [showBox2, setShowBox2] = useState<boolean>(false)
     const sliderControl = useAnimationControls()
     const currentImage = useRef<number>(0)
     const imageWidth = useRef<number>(1)
 
+    // for the closing of the modal
     const closeY = useMotionValue(0)
-    const windowY = useTransform(closeY, [0, 100], [0, 100])
     const closeDragControl = useDragControls()
+    const closeAnimationControls = useAnimationControls()
+
 
     // update the slider image width
     useEffect(() => {
@@ -33,19 +41,23 @@ export default function MiniWindow({imgUrl}:miniProps) {
         imageWidth.current = imgW
     }, [])
 
-    useEffect(() => {
-        const unSub = closeY.onChange(latest => {
-            console.log(latest, windowY.get())
-        })
-
-        return () => {
-            unSub()
-        }
-    }, [closeY])
-    
+    //--start-- for modal mini-window closing
     function startDrag(e: PointerEvent<HTMLParagraphElement>) {
         closeDragControl.start(e)
     }
+
+    async function dragHasEnded(e:DragEvent) {
+        const currentCloseY = closeY.get()
+        if (currentCloseY < 150) {
+            closeAnimationControls.start({y:0})
+        } else {
+            await closeAnimationControls.start({y:1000})
+
+            // update the state so that the parent component knows that the modal is no-longer showing anymore, also delays the update until the animation above is completed
+            setShowModal({show:false, imgUrl:imgUrl})
+        }
+    }
+    //--end--
 
     // the function for sliding of the images
     const showTheNextImage = async (whichSide: 'left'|'right') => {
@@ -81,6 +93,9 @@ export default function MiniWindow({imgUrl}:miniProps) {
             dragConstraints={{top:0}}
             dragElastic={0}
             className="orderWindow"
+            style={{y:closeY}}
+            onDragEnd={dragHasEnded}
+            animate={closeAnimationControls}
         >
             <div className="order_mini_window">
                 <div className="orderClose">
