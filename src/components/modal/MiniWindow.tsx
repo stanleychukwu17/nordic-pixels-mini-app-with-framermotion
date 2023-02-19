@@ -64,6 +64,8 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
     const xBtnOrder = useMotionValue(0)
     const btnBg = useTransform(xBtnOrder, [0, 310], ['#000', '#e8f0d5'])
     const btnColor = useTransform(xBtnOrder, [0, 310], ['#e8f0d5', '#000'])
+    const miniWindowBg = useTransform(xBtnOrder, [0, 310], ['#f1f1f0', '#000'])
+    const miniWindowColor = useTransform(xBtnOrder, [0, 310], ['#1f1b3d', '#e8f0d5'])
 
 
     // update the slider image width
@@ -164,12 +166,12 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
             dragMomentum={false}
             dragConstraints={{top:0}}
             dragElastic={0}
-            className="orderWindow"
             style={{y:closeY}}
             onDragEnd={dragHasEnded}
             animate={closeAnimationControls}
+            className="orderWindow"
         >
-            <div className="order_mini_window">
+            <motion.div className="order_mini_window" style={{backgroundColor:miniWindowBg, color:miniWindowColor}}>
                 <div className="orderClose">
                     <motion.p
                         onPointerDown={startDrag}
@@ -238,7 +240,7 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                         </div>
                     </div>
                 )}
-            </div>
+            </motion.div>
         </motion.div>
     )
 }
