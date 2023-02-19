@@ -207,6 +207,14 @@
                     }
                 }
             }
+
+            .svgCover {
+                @include u1.block_display();
+                display: none;
+                width: 70%;
+                margin: 50px auto;
+            }
+
             .bx2Btn{
                 text-align: center;
                 padding: 15px 0;

@@ -217,7 +217,12 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                             <motion.div variants={box2_Dts2_Variant}><p>Delivery:</p><p>Expedited</p></motion.div>
                             <motion.div variants={box2_Dts2_Variant}><p>Price:</p><p>$59.99</p></motion.div>
                         </motion.div>
-
+                        <div className="svgCover">
+                            <motion.svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 128 128" enable-background="new 0 0 128 128" xmlSpace="preserve">
+                                <motion.path fill="none" stroke="#e8f0d5" stroke-width="4.7569" stroke-linecap="round" stroke-miterlimit="10" d="M35.4,69.2l13.4,13.4 c2.1,2.1,5.6,2.1,7.8,0l36.1-36.1"/>
+                                <motion.path fill="none" stroke="#e8f0d5" stroke-width="3.5677" stroke-miterlimit="10" d="M64,123.6L64,123.6C31.2,123.6,4.4,96.9,4.4,64 C4.4,31.1,31.2,4.4,64,4.4c32.9,0,59.6,26.7,59.6,59.6C123.7,96.9,96.9,123.6,64,123.6z"/>
+                            </motion.svg>
+                        </div>
                         <div className="bx2Btn">
                             <motion.button style={{backgroundColor:btnBg, color:btnColor}} variants={buttonVariant} initial='initial' animate='animate'>
                                 Confirm your order
