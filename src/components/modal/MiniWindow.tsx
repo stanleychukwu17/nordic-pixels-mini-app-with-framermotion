@@ -8,7 +8,7 @@ import './MiniStyle.scss'
 import { FaChevronLeft, FaChevronRight, FaAngleDoubleRight } from "react-icons/fa";
 
 // variants for framerMotion animations
-import { box2_Dts1_Variant, box2_Dts2_Variant, buttonVariant } from '../App/Variants';
+import { box2_Dts1_Variant, box2_Dts2_Variant, buttonVariant, svgParent, svgCircle, svgCheck } from '../App/Variants';
 
 
 
@@ -66,7 +66,9 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
     const btnColor = useTransform(xBtnOrder, [0, 310], ['#e8f0d5', '#000'])
     const miniWindowBg = useTransform(xBtnOrder, [0, 310], ['#f1f1f0', '#000'])
     const miniWindowColor = useTransform(xBtnOrder, [0, 310], ['#1f1b3d', '#e8f0d5'])
-
+    const svgControlA = useAnimationControls()
+    const svgControlB = useAnimationControls()
+    const svgControlC = useAnimationControls()
 
     // update the slider image width
     useEffect(() => {
@@ -158,6 +160,37 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
         //--end--
     }
 
+    // when the dragging of the order button has ended, we check for where should be the final destination
+    const orderButtonDragEnded = () => {
+        const finalPosition = xBtnOrder.get()
+        let completedOrder = false;
+
+        if (finalPosition > 0 && finalPosition <= 270) {
+            gsap.fromTo('.bx2Btn p', {x:finalPosition}, { x:0, duration:.2, onComplete: () => { xBtnOrder.set(0) } })
+        } else if (finalPosition > 270 && finalPosition < 310) {
+            completedOrder = true;
+            gsap.fromTo('.bx2Btn p', {x:finalPosition}, { x:310, duration:.2, onComplete: () => { xBtnOrder.set(310) } })
+        } else if (finalPosition>=310) {
+            completedOrder = true;
+        }
+
+        // if the order is completed, 
+        if (completedOrder) {
+            gsap.set('.bx2Mid, .bx2Btn', {display:'none'})
+            gsap.set('.svgCover', {display:'block'})
+
+            // animates the check svg into the scene
+            svgControlA.set('initial')
+            svgControlA.start('animate')
+    
+            svgControlB.set('initial')
+            svgControlB.start('animate')
+    
+            svgControlC.set('initial')
+            svgControlC.start('animate')
+        }
+    }
+
     return (
         <motion.div
             drag="y"
@@ -219,12 +252,12 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                             <motion.div variants={box2_Dts2_Variant}><p>Delivery:</p><p>Expedited</p></motion.div>
                             <motion.div variants={box2_Dts2_Variant}><p>Price:</p><p>$59.99</p></motion.div>
                         </motion.div>
-                        <div className="svgCover">
-                            <motion.svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 128 128" enable-background="new 0 0 128 128" xmlSpace="preserve">
-                                <motion.path fill="none" stroke="#e8f0d5" stroke-width="4.7569" stroke-linecap="round" stroke-miterlimit="10" d="M35.4,69.2l13.4,13.4 c2.1,2.1,5.6,2.1,7.8,0l36.1-36.1"/>
-                                <motion.path fill="none" stroke="#e8f0d5" stroke-width="3.5677" stroke-miterlimit="10" d="M64,123.6L64,123.6C31.2,123.6,4.4,96.9,4.4,64 C4.4,31.1,31.2,4.4,64,4.4c32.9,0,59.6,26.7,59.6,59.6C123.7,96.9,96.9,123.6,64,123.6z"/>
+                        <motion.div className="svgCover" variants={svgParent} animate={svgControlA}>
+                            <motion.svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 128 128" enableBackground="new 0 0 128 128" xmlSpace="preserve">
+                                <motion.path variants={svgCheck} animate={svgControlB} fill="none" stroke="#e8f0d5" strokeWidth="4.7569" strokeLinecap="round" strokeMiterlimit="10" d="M35.4,69.2l13.4,13.4 c2.1,2.1,5.6,2.1,7.8,0l36.1-36.1"/>
+                                <motion.path variants={svgCircle} animate={svgControlC} fill="none" stroke="#e8f0d5" strokeWidth="3.5677" strokeMiterlimit="10" strokeLinecap="round" d="M64,123.6L64,123.6C31.2,123.6,4.4,96.9,4.4,64 C4.4,31.1,31.2,4.4,64,4.4c32.9,0,59.6,26.7,59.6,59.6C123.7,96.9,96.9,123.6,64,123.6z"/>
                             </motion.svg>
-                        </div>
+                        </motion.div>
                         <div className="bx2Btn">
                             <motion.button style={{backgroundColor:btnBg, color:btnColor}} variants={buttonVariant} initial='initial' animate='animate'>
                                 Confirm your order
@@ -233,6 +266,7 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                                     dragConstraints={{left:0, right:310}}
                                     dragMomentum={false}
                                     style={{x:xBtnOrder, backgroundColor:btnColor, color:btnBg}}
+                                    onDragEnd={orderButtonDragEnded}
                                 >
                                     <FaAngleDoubleRight />
                                 </motion.p>

@@ -75,3 +75,36 @@ export const buttonVariant: generalOne = {
         }
     }
 }
+
+export const svgParent: generalOne = {
+    initial: {rotate: 0, scale: .7},
+    animate: {
+        rotate: 360,
+        scale: 1,
+        originX: 'center',
+        originY: 'center',
+        transition: {
+            duration: 2,
+            ease: 'easeInOut',
+        }
+    }
+}
+
+export const svgCircle: generalOne = {
+    initial: {pathLength: 0, pathOffset: 0},
+    animate: {
+        pathLength: 1,
+        pathOffset: [0,1.5,2],
+        transition: {
+            duration: 1, ease: 'linear'
+        }
+    }
+}
+
+export const svgCheck: generalOne = {
+    initial: {pathLength: 0},
+    animate: {
+        pathLength: 1,
+        transition: {duration: .4, delay:1.5, ease: 'easeInOut'}
+    }
+}
