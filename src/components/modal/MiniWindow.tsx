@@ -46,7 +46,7 @@ type miniProps = modalProps1 & {
 }
 // https://learn.headliner.app/hc/en-us/articles/360004101114-What-are-the-sizes-of-the-landscape-portrait-square-templates- - got references for different sizes from here
 export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
-    const [showBox2, setShowBox2] = useState<boolean>(false)
+    const [showBox2, setShowBox2] = useState<boolean>(true)
     const sliderControl = useAnimationControls()
     const previousImage = useRef<number>(0)
     const currentImage = useRef<number>(0)
@@ -59,6 +59,9 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
     const closeY = useMotionValue(0)
     const closeDragControl = useDragControls()
     const closeAnimationControls = useAnimationControls()
+
+    // for confirming of order
+    // const buttonDragConstraintRef = useRef<HTMLButtonElement>(null);
 
 
     // update the slider image width
@@ -197,7 +200,6 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                             </div>
                         </div>
                         <div className="imgFormatB1">
-                            /
                             <div className="imgFormatCvr"><p>{curText}</p></div>
                         </div>
                         <div className="orderBtn">
@@ -216,7 +218,14 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
 
                         <div className="bx2Btn">
                             <motion.button variants={buttonVariant} initial='initial' animate='animate'>
-                                <p><FaAngleDoubleRight /></p> Confirm your order
+                                Confirm your order
+                                <motion.p
+                                    drag="x"
+                                    dragConstraints={{left:0, right:310}}
+                                    dragMomentum={false}
+                                >
+                                    <FaAngleDoubleRight />
+                                </motion.p>
                             </motion.button>
                         </div>
                     </div>
