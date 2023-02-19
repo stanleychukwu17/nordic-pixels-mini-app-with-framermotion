@@ -1,7 +1,6 @@
 import {useState, useRef, useEffect, PointerEvent } from 'react';
-import { motion, useAnimationControls, useDragControls, useMotionValue } from 'framer-motion';
+import { motion, useAnimationControls, useDragControls, useMotionValue, useTransform } from 'framer-motion';
 import { gsap } from 'gsap';
-// useTransform
 
 import './MiniStyle.scss'
 
@@ -62,6 +61,9 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
 
     // for confirming of order
     // const buttonDragConstraintRef = useRef<HTMLButtonElement>(null);
+    const xBtnOrder = useMotionValue(0)
+    const btnBg = useTransform(xBtnOrder, [0, 310], ['#000', '#e8f0d5'])
+    const btnColor = useTransform(xBtnOrder, [0, 310], ['#e8f0d5', '#000'])
 
 
     // update the slider image width
@@ -217,12 +219,13 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                         </motion.div>
 
                         <div className="bx2Btn">
-                            <motion.button variants={buttonVariant} initial='initial' animate='animate'>
+                            <motion.button style={{backgroundColor:btnBg, color:btnColor}} variants={buttonVariant} initial='initial' animate='animate'>
                                 Confirm your order
                                 <motion.p
                                     drag="x"
                                     dragConstraints={{left:0, right:310}}
                                     dragMomentum={false}
+                                    style={{x:xBtnOrder, backgroundColor:btnColor, color:btnBg}}
                                 >
                                     <FaAngleDoubleRight />
                                 </motion.p>
