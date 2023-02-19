@@ -48,6 +48,7 @@ type miniProps = modalProps1 & {
 export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
     const [showBox2, setShowBox2] = useState<boolean>(false)
     const sliderControl = useAnimationControls()
+    const previousImage = useRef<number>(0)
     const currentImage = useRef<number>(0)
     const imageWidth = useRef<number>(1)
     const imgText = {0:"Square (1:1)", 1:"Portrait (3:4)", 2:"Landscape (7:4)"}
@@ -108,6 +109,9 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
 
     // the function for sliding of the images
     const showTheNextImage = async (whichSide: 'left'|'right') => {
+        // stores the current image inView so that it becomes the previous image
+        previousImage.current = currentImage.current;
+
         // moving to the left or to the right
         if (whichSide === 'left'){
             currentImage.current--;
@@ -123,6 +127,11 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
             }
         }
 
+        // if the below is true, the user is at the end of an image, so there is no need for sliding the images again
+        if (previousImage.current === currentImage.current) {
+            return false
+        }
+
         // slides the current image to view
         const move1 = currentImage.current * imageWidth.current
         sliderControl.start({
@@ -131,7 +140,7 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
         })
 
 
-        //--start-- shows the text for the current picture frame
+        //--start-- shows the text for the current picture frame(Square|Portrait|Landscape)
         //@ts-ignore
         const curText:string = imgText[currentImage.current]
         const grab = document.querySelector('.imgFormatCvr p')!
