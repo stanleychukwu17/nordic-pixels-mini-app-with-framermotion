@@ -45,7 +45,7 @@ type miniProps = modalProps1 & {
 }
 // https://learn.headliner.app/hc/en-us/articles/360004101114-What-are-the-sizes-of-the-landscape-portrait-square-templates- - got references for different sizes from here
 export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
-    const [showBox2, setShowBox2] = useState<boolean>(true)
+    const [showBox2, setShowBox2] = useState<boolean>(false)
     const sliderControl = useAnimationControls()
     const previousImage = useRef<number>(0)
     const currentImage = useRef<number>(0)
