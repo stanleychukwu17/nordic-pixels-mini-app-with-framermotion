@@ -1,5 +1,6 @@
 import {useState, useRef, useEffect, PointerEvent } from 'react';
 import { motion, useAnimationControls, useDragControls, useMotionValue } from 'framer-motion';
+import { gsap } from 'gsap';
 // useTransform
 
 import './MiniStyle.scss'
@@ -9,6 +10,7 @@ import { FaChevronLeft, FaChevronRight, FaAngleDoubleRight } from "react-icons/f
 
 // variants for framerMotion animations
 import { box2_Dts1_Variant, box2_Dts2_Variant, buttonVariant } from '../App/Variants';
+
 
 
 
@@ -44,10 +46,13 @@ type miniProps = modalProps1 & {
 }
 // https://learn.headliner.app/hc/en-us/articles/360004101114-What-are-the-sizes-of-the-landscape-portrait-square-templates- - got references for different sizes from here
 export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
-    const [showBox2, setShowBox2] = useState<boolean>(true)
+    const [showBox2, setShowBox2] = useState<boolean>(false)
     const sliderControl = useAnimationControls()
     const currentImage = useRef<number>(0)
     const imageWidth = useRef<number>(1)
+    const imgText = {0:"Square (1:1)", 1:"Portrait (3:4)", 2:"Landscape (7:4)"}
+    //@ts-ignore
+    let curText = imgText[currentImage.current]
 
     // for the closing of the modal
     const closeY = useMotionValue(0)
@@ -76,7 +81,7 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
             button?.classList.add('mobileSize')
         }
 
-        // stops the body element from overScrolling
+        // stops the body element from overScrolling.. doing this mainly because of mobile version
         document.querySelector('body')?.classList.add('noScroll')
         return () => {
             document.querySelector('body')?.classList.remove('noScroll')
@@ -124,6 +129,17 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
             x: -move1,
             transition: {duration: .5, type: 'spring', stiffness: 500, damping: 20}
         })
+
+
+        //--start-- shows the text for the current picture frame
+        //@ts-ignore
+        const curText:string = imgText[currentImage.current]
+        const grab = document.querySelector('.imgFormatCvr p')!
+
+        gsap.set(grab, {y:35})
+        gsap.to(grab, {y:0, duration:.2})
+        grab.innerHTML = curText
+        //--end--
     }
 
     return (
@@ -172,7 +188,8 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
                             </div>
                         </div>
                         <div className="imgFormatB1">
-                            <div className="imgFormatCvr"></div>
+                            /
+                            <div className="imgFormatCvr"><p>{curText}</p></div>
                         </div>
                         <div className="orderBtn">
                             <button onClick={() => setShowBox2(true)}>Continue</button>

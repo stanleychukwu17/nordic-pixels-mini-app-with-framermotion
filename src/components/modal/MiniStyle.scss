@@ -131,16 +131,26 @@
             .imgFormatB1 {
                 display: block;
                 position: relative;
+
                 .imgFormatCvr {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
                     position: absolute;
-                    top: -20px;
+                    min-width: 40%;
+                    height: 45px;
+                    overflow: hidden;
+                    top: -22px;
                     left: 30%;
                     z-index: 1;
-                    min-width: 40%;
-                    height: 40px;
-                    border-radius: 5px;
                     background-color: #efeff0;
                     box-shadow: 0 0.4em 1em rgba(0, 0, 0, 0.1);
+                    border-bottom: 1px solid #f1f2f6;
+                    border-radius: 5px;
+
+                    p {
+                        font-weight: 800;
+                    }
                 }
             }
 
