@@ -103,7 +103,13 @@
                             justify-content: center;
                             align-items: center;
 
-                            &.i2 { // potrait
+                            > div {
+                                position: relative;
+                                width: 370px;
+                                height: 370px;
+                            }
+
+                            &.i2 { // portrait
                                 > div {
                                     position: relative;
                                     width: 208px;
