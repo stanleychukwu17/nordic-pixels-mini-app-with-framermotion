@@ -30,6 +30,9 @@
 body {
     background-color: #2a1b1d !important;
 }
+.blurItems {
+    filter: blur(2px);
+}
 .AppMain {
     $lightColor: #e8f0d5;
     $yellowColor: #fcd30c;
@@ -87,7 +90,6 @@ body {
     }
 
     .AppImages {
-        // filter: blur(2px);
         display: flex;
         flex-flow: row wrap;
         justify-content: space-evenly;

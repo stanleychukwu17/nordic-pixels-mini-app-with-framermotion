@@ -70,10 +70,6 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
     const svgControlB = useAnimationControls()
     const svgControlC = useAnimationControls()
 
-    // blur the rest of the contents on modal opening
-    useEffect(() => {
-
-    }, [])
     // update the slider image width
     useEffect(() => {
         try {

@@ -43,9 +43,11 @@ for (let index = 1; index < 13; index++) {
 const App = () => {
     const [allImages, setAllImages] = useState<imgType[]>(images)
     const [tabActive, setTabActive] = useState<'none'|'views'|'rating'>('none')
-    const [showModal, setShowModal] = useState<modalProps1>({show:true, imgUrl:allImages[3].img})
+    // const [showModal, setShowModal] = useState<modalProps1>({show:true, imgUrl:allImages[3].img}) // if you want to show image quickly, maybe u might want to debug
+    const [showModal, setShowModal] = useState<modalProps1>({show:false, imgUrl:''})
     const imageControls = useAnimationControls()
 
+    // animate the grid images into view
     useEffect(() => {
         imageControls.start('intro')
     }, [imageControls])
@@ -64,6 +66,20 @@ const App = () => {
     const show_this_image_options_for_purchase = (imgUrl:string) => {
         setShowModal({show:true, imgUrl}); // shows the mini-window for buying of images
     }
+
+    // blur the rest of the contents on modal opening
+    useEffect(() => {
+        const itemsToBlur = ['.TopCvr', '.AppImages']
+        if (showModal.show) {
+            itemsToBlur.forEach(item => {
+                document.querySelector(item)?.classList.add('blurItems')
+            })
+        } else {
+            itemsToBlur.forEach(item => {
+                document.querySelector(item)?.classList.remove('blurItems')
+            })
+        }
+    }, [showModal])
 
     return (
         <div className="AppMain">
