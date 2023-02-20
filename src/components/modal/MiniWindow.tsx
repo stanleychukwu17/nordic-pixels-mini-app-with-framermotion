@@ -103,16 +103,25 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
         closeDragControl.start(e)
     }
 
-    async function dragHasEnded(e:DragEvent) {
+    function dragHasEnded(e:DragEvent) {
         const currentCloseY = closeY.get()
         if (currentCloseY < 150) {
             closeAnimationControls.start({y:0})
         } else {
-            await closeAnimationControls.start({y:500, opacity:0, transition:{ease:'linear', duration:.2}})
-
-            // update the state so that the parent component knows that the modal is no-longer showing anymore, also delays the update until the animation above is completed
-            setShowModal({show:false, imgUrl:imgUrl})
+            closeTheModal()
         }
+    }
+    
+    async function closeTheModal () {
+        await closeAnimationControls.start({y:500, opacity:0, transition:{ease:'linear', duration:.2}})
+
+        // update the state so that the parent component knows that the modal is no-longer showing anymore, also delays the update until the animation above is completed
+        setShowModal({show:false, imgUrl:imgUrl})
+    }
+    function check_if_user_clicked_on_background_to_close_the_modal (event:MouseEvent) {
+        //@ts-ignore
+        const classN = event.target.className
+        if (classN === 'orderWindow') closeTheModal()
     }
     //--end--
 
@@ -203,6 +212,7 @@ export default function MiniWindow({imgUrl, setShowModal}:miniProps) {
             onDragEnd={dragHasEnded}
             animate={closeAnimationControls}
             className="orderWindow"
+            onTap={check_if_user_clicked_on_background_to_close_the_modal}
         >
             <motion.div className="order_mini_window" style={{backgroundColor:miniWindowBg, color:miniWindowColor}}>
                 <div className="orderClose">
